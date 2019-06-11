@@ -1,5 +1,14 @@
-import {createAppContainer, createBottomTabNavigator} from "react-navigation";
-import React from 'react';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+
+import React, {Component} from 'react';
+import {createAppContainer} from "react-navigation";
+import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
 import Popular from "../page/Popular";
 import Trending from "../page/Trending";
 import Favorite from "../page/Favorite";
@@ -8,7 +17,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const navigator = createBottomTabNavigator({
+type Props = {};
+
+const TABS = {
   Popular: {
     screen: Popular,
     navigationOptions: {
@@ -45,6 +56,38 @@ const navigator = createBottomTabNavigator({
       )
     }
   }
-});
+};
 
-export default createAppContainer(navigator);
+export default class BottomNavigator extends Component<Props> {
+  render() {
+    const {Popular, Trending, Favorite, My} = TABS;
+    const tabs = {Popular, Trending, Favorite, My};
+    const Navigator = createAppContainer(createBottomTabNavigator(tabs, {
+      tabBarComponent: TabBarComponent
+    }));
+    return <Navigator/>
+  }
+}
+
+class TabBarComponent extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.theme = {
+      tintColor: props.activeTintColor,
+      updateTime: new Date().getTime()
+    }
+  }
+  render() {
+    const {routes, index} = this.props.navigation.state;
+    if (routes[index].params) {
+      const {theme} = routes[index].params;
+      if (theme && theme.updateTime > this.theme.updateTime) {
+        this.theme = theme;
+      }
+    }
+    return <BottomTabBar
+      {...this.props}
+      activeTintColor={this.theme.tintColor || this.props.activeTintColor}
+    />
+  }
+}
