@@ -14,7 +14,7 @@ const navigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: '最热',
       tabBarIcon: ({tintColor, focused}) => (
-        <MaterialIcons name={'whatshot'} fontSize={26} style={{color: tintColor}}/>
+        <MaterialIcons name={'whatshot'} size={26} style={{color: tintColor}}/>
       )
     }
   },
@@ -23,7 +23,7 @@ const navigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: '趋势',
       tabBarIcon: ({tintColor, focused}) => (
-        <Ionicons name={'md-trending-up'} fontSize={26} style={{color: tintColor}}/>
+        <Ionicons name={'md-trending-up'} size={26} style={{color: tintColor}}/>
       )
     }
   },
@@ -32,7 +32,7 @@ const navigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: '收藏',
       tabBarIcon: ({tintColor, focused}) => (
-        <MaterialIcons name={'favorite'} fontSize={26} style={{color: tintColor}}/>
+        <MaterialIcons name={'favorite'} size={26} style={{color: tintColor}}/>
       )
     }
   },
@@ -41,7 +41,7 @@ const navigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: '我的',
       tabBarIcon: ({tintColor, focused}) => (
-        <Entypo name={'user'} fontSize={26} style={{color: tintColor}}/>
+        <Entypo name={'user'} size={26} style={{color: tintColor}}/>
       )
     }
   }

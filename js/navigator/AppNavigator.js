@@ -19,7 +19,10 @@ const InitNavigator = createStackNavigator({
 
 const MainNavigator = createStackNavigator({
   Home: {
-    screen: Home
+    screen: Home,
+    navigationOptions: {
+      header: null
+    }
   },
   Detail: {
     screen: Detail
