@@ -9,6 +9,8 @@
 import React, {Component} from 'react';
 import {createAppContainer} from "react-navigation";
 import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
+import {connect} from 'react-redux';
+
 import Popular from "../page/Popular";
 import Trending from "../page/Trending";
 import Favorite from "../page/Favorite";
@@ -16,6 +18,7 @@ import My from "../page/My";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+
 
 type Props = {};
 
@@ -58,14 +61,20 @@ const TABS = {
   }
 };
 
-export default class BottomNavigator extends Component<Props> {
-  render() {
+class BottomNavigator extends Component<Props> {
+  _tabNavigator() {
+    if (this.Tab) {
+      return this.Tab;
+    }
     const {Popular, Trending, Favorite, My} = TABS;
     const tabs = {Popular, Trending, Favorite, My};
-    const Navigator = createAppContainer(createBottomTabNavigator(tabs, {
-      tabBarComponent: TabBarComponent
+    return this.Tab = createAppContainer(createBottomTabNavigator(tabs, {
+      tabBarComponent: props => <TabBarComponent theme={this.props.theme} {...props}/>
     }));
-    return <Navigator/>
+  }
+  render() {
+    const Tab = this._tabNavigator();
+    return <Tab/>
   }
 }
 
@@ -78,16 +87,15 @@ class TabBarComponent extends Component<Props> {
     }
   }
   render() {
-    const {routes, index} = this.props.navigation.state;
-    if (routes[index].params) {
-      const {theme} = routes[index].params;
-      if (theme && theme.updateTime > this.theme.updateTime) {
-        this.theme = theme;
-      }
-    }
     return <BottomTabBar
       {...this.props}
-      activeTintColor={this.theme.tintColor || this.props.activeTintColor}
+      activeTintColor={this.props.theme}
     />
   }
 }
+
+const mapStateToProps = state => ({
+  theme: state.theme.theme
+});
+
+export default connect(mapStateToProps)(BottomNavigator);

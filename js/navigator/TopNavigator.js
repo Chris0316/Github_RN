@@ -29,7 +29,7 @@ export default class TopNavigator extends Component<Props> {
       tabBarOptions: {
         tabStyle: styles.tabStyle,
         upperCaseLabel: false,
-        scrollEnabled: false,
+        scrollEnabled: true,
         style: {
           backgroundColor: '#678'
         },
